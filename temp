@@ -9,7 +9,9 @@ char    *get_next_line(int fd);
 
 #endif
 
-// get_next_line.c
+#include <unistd.h>
+#include <stdlib.h>
+#include <fcntl.h>
 #include "get_next_line.h"
 
 char	*get_next_line(int fd)
@@ -34,31 +36,4 @@ char	*get_next_line(int fd)
     }
     line[i] = '\0';
     return (line);
-}
-
-// Main function for testing
-int	main(int argc, char **argv)
-{
-    int		fd;
-    char	*line;
-
-    if (argc < 2)
-    {
-        write(1, "Please provide a file to read\n", 30);
-        return (1);
-    }
-    fd = open(argv[1], O_RDONLY);
-    if (fd < 0)
-    {
-        write(1, "Error opening file\n", 19);
-        return (1);
-    }
-    while ((line = get_next_line(fd)) != NULL)
-    {
-        write(1, "Line: ", 6);
-        write(1, line, strlen(line));
-        free(line);
-    }
-    close(fd);
-    return (0);
 }
